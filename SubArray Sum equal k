@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int subarraySum(vector<int>& arr, int k) {
+        int n = arr.size(); // taking the size of the array
+        
+        int ans = 0, tot = 0;
+        unordered_map<int,int> ump;
+        ump[tot]=1;
+        for(auto x: arr)
+        {
+            tot+=x;
+            if(ump[tot-k]>0)
+            {
+                ans+=ump[tot-k];
+                
+            }
+            ump[tot]++;
+        }
+        
+        return ans; // and at last, return answer
+    }
+};

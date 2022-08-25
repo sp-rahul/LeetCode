@@ -1,0 +1,56 @@
+class Solution {
+public:
+    int findTargetSumWays(vector<int>& ar, int target) {
+    
+        
+        int n=ar.size();
+       
+        //vector<int> v1,v2;
+        //v1.push_back(ar[0]);
+        //v1.push_back(-ar[0]);
+        set<int>v1,v2;
+        v1.insert(ar[0]);
+        v1.insert(-ar[0]);
+        map<int,int>mp1,mp2;
+        mp1[ar[0]]++;
+        mp1[-ar[0]]++;
+
+        for(int i=1;i<n;i++)
+        {
+            int x=ar[i];
+           for(int y: v1)
+           {
+               if(mp1[y])
+               {
+                   mp2[y+x]+=mp1[y];
+                   mp2[y-x]+=mp1[y];
+               }
+               else{
+                   mp2[y+x]++;
+                   mp2[y-x]++;
+               }
+
+               v2.insert(y+x);
+               v2.insert(y-x);
+
+           }
+           v1.clear();
+           v1=v2;
+           v2.clear();
+           mp1.clear();
+           mp1=mp2;
+           mp2.clear();
+
+        }
+        int cnt=0;
+        for(int y: v1)
+        {
+
+            if(y==target)
+            {
+                cnt+=mp1[y];
+            }
+        }
+        return cnt;
+    }
+};
